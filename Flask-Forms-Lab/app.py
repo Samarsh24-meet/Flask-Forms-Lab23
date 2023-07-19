@@ -7,19 +7,17 @@ app = Flask(  # Create a flask app
 	static_folder='static'  # Name of directory for static files
 )
 
-
-username = "siwarha"
-password = "123"
+accounts = {"samar": "qwerty", "siwarha": "123", "hesham": "5645"}
 facebook_friends=["Lilly","Maya","Leen", "Adam", "Fouad", "Gi"]
 
 
 @app.route('/', methods = ['GET', 'POST'])  # '/' for the default page
 def login():
 	if request.method == 'POST':
-		name = request.form['username']
+		name = request.form['username'].casefold()
 		pas = request.form['password']
 
-		if name == username and pas == password:
+		if name in accounts.keys() and pas == accounts[name]:
 			return redirect(url_for('home'))
 		else:
 			return render_template('login.html')
